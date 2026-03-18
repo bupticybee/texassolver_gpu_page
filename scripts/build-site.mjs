@@ -46,8 +46,9 @@ function renderPage(locale) {
 
   const localeOptions = localeOrder
     .map((code) => {
-      const selected = code === locale ? ' selected' : ''
-      return `<option value="${code}"${selected}>${localeLabels[code]}</option>`
+      const href = code === 'en' ? `${siteConfig.basePath}/` : `${siteConfig.basePath}/${code}/`
+      const current = code === locale ? ' aria-current="true"' : ''
+      return `<a class="locale-option" href="${href}" data-locale-link="${code}"${current}>${localeLabels[code]}</a>`
     })
     .join('')
 
@@ -129,10 +130,13 @@ function renderPage(locale) {
           <a href="#features">${escapeHtml(content.nav.features)}</a>
           <a href="#faq">${escapeHtml(content.nav.faq)}</a>
         </nav>
-        <label class="locale-switcher">
-          <span>${escapeHtml(content.nav.language)}</span>
-          <select data-locale-switcher>${localeOptions}</select>
-        </label>
+        <details class="locale-switcher">
+          <summary>
+            <span class="locale-switcher-label">${escapeHtml(content.nav.language)}</span>
+            <span class="locale-switcher-value">${escapeHtml(localeLabels[locale])}</span>
+          </summary>
+          <div class="locale-menu">${localeOptions}</div>
+        </details>
       </header>
 
       <main id="top">

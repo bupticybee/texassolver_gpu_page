@@ -3,16 +3,15 @@ const storageKey = 'texassolver_gpu_locale'
 
 const currentLocale = document.body.dataset.locale || 'en'
 const basePath = document.body.dataset.basePath || ''
-const switcher = document.querySelector('[data-locale-switcher]')
+const localeLinks = document.querySelectorAll('[data-locale-link]')
 
-if (switcher) {
-  switcher.addEventListener('change', (event) => {
-    const nextLocale = event.target.value
+localeLinks.forEach((link) => {
+  link.addEventListener('click', (event) => {
+    const nextLocale = event.currentTarget.getAttribute('data-locale-link')
     if (!localeOrder.includes(nextLocale)) return
     localStorage.setItem(storageKey, nextLocale)
-    window.location.href = buildLocaleUrl(nextLocale)
   })
-}
+})
 
 const params = new URLSearchParams(window.location.search)
 const paramLocale = params.get('lang')
