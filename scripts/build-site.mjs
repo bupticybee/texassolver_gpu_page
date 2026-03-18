@@ -1,6 +1,7 @@
-import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { cp, mkdir, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import sharp from 'sharp'
 import { featureContent, featureOrder, localizedContent, localeLabels, localeOrder, siteConfig } from '../src/site-data.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -8,14 +9,22 @@ const rootDir = path.resolve(__dirname, '..')
 const distDir = path.join(rootDir, 'dist')
 const assetDir = path.join(distDir, 'assets')
 const screenshotDir = path.join(assetDir, 'images')
+const optimizedScreenshots = {
+  tree: 'tree_construction_page.webp',
+  quickStart: 'quick_start_page.webp',
+  nodeLock: 'node_lock_page.webp',
+  batch: 'batch_solving_page.webp',
+  play: 'play_against_strategy.webp',
+  logo: 'logo-mark.webp',
+  favicon: 'logo-mark.png',
+}
 
 await rm(distDir, { recursive: true, force: true })
 await mkdir(screenshotDir, { recursive: true })
 
-await cp(path.join(rootDir, 'raw_images'), screenshotDir, { recursive: true })
 await cp(path.join(rootDir, 'src', 'site.css'), path.join(assetDir, 'site.css'))
 await cp(path.join(rootDir, 'src', 'runtime.js'), path.join(assetDir, 'runtime.js'))
-await cp(path.join(rootDir, 'src', 'logo-mark.png'), path.join(assetDir, 'images', 'logo-mark.png'))
+await optimizeImages()
 await writeFile(path.join(distDir, '.nojekyll'), '')
 
 for (const locale of localeOrder) {
@@ -55,7 +64,7 @@ function renderPage(locale) {
   const featureCards = featureOrder
     .map((key, index) => {
       const [title, accent, body] = featureContent[key][locale]
-      const image = siteConfig.screenshots[key]
+      const image = optimizedScreenshots[key]
       const reverse = index % 2 === 1 ? ' reverse' : ''
       return `
         <article class="feature-card${reverse}">
@@ -98,9 +107,9 @@ function renderPage(locale) {
     <meta property="og:description" content="${escapeHtml(content.description)}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${pageHref}" />
-    <meta property="og:image" content="${assetPrefix}/images/${siteConfig.screenshots.tree}" />
+    <meta property="og:image" content="${assetPrefix}/images/${optimizedScreenshots.tree}" />
     <meta name="robots" content="index,follow" />
-    <link rel="icon" type="image/png" href="${assetPrefix}/images/${siteConfig.screenshots.logo}" />
+    <link rel="icon" type="image/png" href="${assetPrefix}/images/${optimizedScreenshots.favicon}" />
     <link rel="canonical" href="${canonical}" />
     <link rel="alternate" hreflang="x-default" href="${siteConfig.basePath}/" />
     ${alternates}
@@ -112,7 +121,7 @@ function renderPage(locale) {
       <div class="ambient ambient-right"></div>
       <header class="site-header">
         <a class="brand" href="#top">
-          <img class="brand-mark" src="${assetPrefix}/images/${siteConfig.screenshots.logo}" alt="" />
+          <img class="brand-mark" src="${assetPrefix}/images/${optimizedScreenshots.logo}" alt="" />
           <span>${siteConfig.productName}</span>
         </a>
         <nav class="top-nav">
@@ -148,7 +157,7 @@ function renderPage(locale) {
           </div>
           <div class="hero-visual">
             <div class="hero-orbit"></div>
-            <img src="${assetPrefix}/images/${siteConfig.screenshots.tree}" alt="TexasSolver GPU tree configuration" fetchpriority="high" />
+            <img src="${assetPrefix}/images/${optimizedScreenshots.tree}" alt="TexasSolver GPU tree configuration" fetchpriority="high" />
           </div>
         </section>
 
@@ -220,4 +229,33 @@ function escapeHtml(input) {
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
+}
+
+async function optimizeImages() {
+  const rawImageDir = path.join(rootDir, 'raw_images')
+  const jobs = [
+    buildWebp(path.join(rootDir, 'src', 'logo-mark.png'), path.join(screenshotDir, optimizedScreenshots.logo), 192, 82),
+    buildPng(path.join(rootDir, 'src', 'logo-mark.png'), path.join(screenshotDir, optimizedScreenshots.favicon), 64),
+    buildWebp(path.join(rawImageDir, siteConfig.screenshots.tree), path.join(screenshotDir, optimizedScreenshots.tree), 1600, 82),
+    buildWebp(path.join(rawImageDir, siteConfig.screenshots.quickStart), path.join(screenshotDir, optimizedScreenshots.quickStart), 1600, 80),
+    buildWebp(path.join(rawImageDir, siteConfig.screenshots.nodeLock), path.join(screenshotDir, optimizedScreenshots.nodeLock), 1600, 80),
+    buildWebp(path.join(rawImageDir, siteConfig.screenshots.batch), path.join(screenshotDir, optimizedScreenshots.batch), 1600, 80),
+    buildWebp(path.join(rawImageDir, siteConfig.screenshots.play), path.join(screenshotDir, optimizedScreenshots.play), 1600, 80),
+  ]
+
+  await Promise.all(jobs)
+}
+
+function buildWebp(input, output, width, quality) {
+  return sharp(input)
+    .resize({ width, withoutEnlargement: true })
+    .webp({ quality })
+    .toFile(output)
+}
+
+function buildPng(input, output, width) {
+  return sharp(input)
+    .resize({ width, withoutEnlargement: true })
+    .png({ compressionLevel: 9, palette: true })
+    .toFile(output)
 }
