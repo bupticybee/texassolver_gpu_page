@@ -15,6 +15,7 @@ await mkdir(screenshotDir, { recursive: true })
 await cp(path.join(rootDir, 'raw_images'), screenshotDir, { recursive: true })
 await cp(path.join(rootDir, 'src', 'site.css'), path.join(assetDir, 'site.css'))
 await cp(path.join(rootDir, 'src', 'runtime.js'), path.join(assetDir, 'runtime.js'))
+await cp(path.join(rootDir, 'src', 'logo-mark.png'), path.join(assetDir, 'images', 'logo-mark.png'))
 await writeFile(path.join(distDir, '.nojekyll'), '')
 
 for (const locale of localeOrder) {
@@ -99,6 +100,7 @@ function renderPage(locale) {
     <meta property="og:url" content="${pageHref}" />
     <meta property="og:image" content="${assetPrefix}/images/${siteConfig.screenshots.tree}" />
     <meta name="robots" content="index,follow" />
+    <link rel="icon" type="image/png" href="${assetPrefix}/images/${siteConfig.screenshots.logo}" />
     <link rel="canonical" href="${canonical}" />
     <link rel="alternate" hreflang="x-default" href="${siteConfig.basePath}/" />
     ${alternates}
@@ -109,7 +111,10 @@ function renderPage(locale) {
       <div class="ambient ambient-left"></div>
       <div class="ambient ambient-right"></div>
       <header class="site-header">
-        <a class="brand" href="#top">${siteConfig.productName}</a>
+        <a class="brand" href="#top">
+          <img class="brand-mark" src="${assetPrefix}/images/${siteConfig.screenshots.logo}" alt="" />
+          <span>${siteConfig.productName}</span>
+        </a>
         <nav class="top-nav">
           <a href="#overview">${escapeHtml(content.nav.overview)}</a>
           <a href="#features">${escapeHtml(content.nav.features)}</a>

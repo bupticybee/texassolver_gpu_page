@@ -91,9 +91,19 @@ img {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+
+.brand-mark {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 10px 28px rgba(114, 204, 255, 0.22);
 }
 
 .top-nav {
@@ -441,6 +451,16 @@ img {
   .hero h1,
   .section-intro h2 {
     font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .brand {
+    gap: 0.6rem;
+  }
+
+  .brand-mark {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.65rem;
   }
 
   .cta-row {

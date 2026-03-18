@@ -7,6 +7,7 @@ export const siteConfig = {
   githubHref: 'https://github.com/bupticybee',
   downloadHref: 'mailto:icybee@yeah.net?subject=TexasSolver%20GPU%20Download',
   screenshots: {
+    logo: 'logo-mark.png',
     tree: 'tree_construction_page.png',
     quickStart: 'quick_start_page.png',
     nodeLock: 'node_lock_page.png',
