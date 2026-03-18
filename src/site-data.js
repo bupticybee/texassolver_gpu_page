@@ -49,7 +49,7 @@ export const localizedContent = {
     valuesText: 'World-first GPU solving, free personal access, and a workflow designed for serious study.',
     values: [
       ['World’s First GPU Solver', 'A new class of poker study tool built around GPU computing rather than a small iteration on the old workflow.'],
-      ['Completely Free for Personal Use', 'Make the free offer obvious so users feel comfortable trying it immediately.'],
+      ['Completely Free for Personal Use', 'Download it, explore the workflow, and start studying without a paywall for personal use.'],
       ['Study Faster', 'Jump into meaningful preflop situations quickly instead of wasting time on repetitive setup.'],
       ['Solve at Scale', 'Run multiple boards in one batch-oriented flow and keep progress visible while you work.'],
     ],
@@ -89,8 +89,8 @@ export const localizedContent = {
     valuesTitle: '不是小改进，而是一代产品形态变化',
     valuesText: '世界第一个 GPU Solver，对个人完全免费，并且围绕严肃研究工作流来设计。',
     values: [
-      ['世界第一个 GPU Solver', '先把产品身份讲清楚：这不是旧工作流的小改款，而是建立在 GPU 计算之上的新一代研究工具。'],
-      ['对个人完全免费', '把免费信息放到最显眼的位置，降低尝试门槛，让用户愿意直接体验。'],
+      ['世界第一个 GPU Solver', '这不是旧工作流的小改款，而是建立在 GPU 计算之上的新一代研究工具。'],
+      ['对个人完全免费', '个人用户可以直接下载、体验和进入研究流程，不需要先跨过付费门槛。'],
       ['更快进入研究', '快速进入你真正想分析的翻前场景，减少重复设置。'],
       ['批量分析能力', '在一个批量工作流里处理多个 board，并清晰看到进度。'],
     ],
@@ -129,8 +129,8 @@ export const localizedContent = {
     valuesTitle: '세대가 바뀐 듯한 제품 경험',
     valuesText: '세계 최초의 GPU 솔버, 개인 사용 완전 무료, 그리고 진지한 연구를 위한 워크플로.',
     values: [
-      ['세계 최초의 GPU 솔버', '기존 워크플로의 작은 변형이 아니라 GPU 계산을 중심으로 한 새로운 연구 도구임을 먼저 보여줍니다.'],
-      ['개인 사용 완전 무료', '무료라는 점을 강하게 보여주어 누구나 바로 시도할 수 있게 만듭니다.'],
+      ['세계 최초의 GPU 솔버', '기존 워크플로의 작은 변형이 아니라 GPU 계산을 중심으로 한 새로운 연구 도구입니다.'],
+      ['개인 사용 완전 무료', '개인 사용자는 비용 부담 없이 바로 다운로드하고 연구 워크플로를 시작할 수 있습니다.'],
       ['더 빠른 진입', '반복 설정 없이 원하는 프리플랍 상황으로 빠르게 이동합니다.'],
       ['배치 분석', '여러 보드를 하나의 작업 흐름에서 처리하고 진행 상황을 계속 확인할 수 있습니다.'],
     ],
@@ -169,8 +169,8 @@ export const localizedContent = {
     valuesTitle: '世代が変わったと感じられる製品体験',
     valuesText: '世界初の GPU solver、個人利用完全無料、そして本格研究向けのワークフロー。',
     values: [
-      ['世界初の GPU solver', '従来ワークフローの小さな違いではなく、GPU 計算を軸にした新しい研究ツールであることを明確に示します。'],
-      ['個人利用完全無料', '無料で試せることを強く打ち出し、最初のハードルを大きく下げます。'],
+      ['世界初の GPU solver', '従来ワークフローの小さな違いではなく、GPU 計算を軸にした新しい研究ツールです。'],
+      ['個人利用完全無料', '個人ユーザーは料金を気にせずにダウンロードして、すぐ研究を始められます。'],
       ['素早い研究開始', '繰り返し設定せずに目的のプリフロップ状況へすぐ入れます。'],
       ['バッチ分析', '複数のボードを 1 つの流れで処理し、進捗も見やすく保てます。'],
     ],
@@ -210,7 +210,7 @@ export const localizedContent = {
     valuesText: 'Первый в мире GPU solver, бесплатный для личного использования, и серьезный исследовательский процесс.',
     values: [
       ['Первый в мире GPU solver', 'Это не небольшое обновление старого подхода, а новый класс покерного инструмента на базе GPU.'],
-      ['Полностью бесплатно для личного использования', 'Бесплатность должна быть видна сразу, чтобы пользователи спокойно пробовали продукт.'],
+      ['Полностью бесплатно для личного использования', 'Личные пользователи могут сразу скачать продукт и начать работать без платного барьера.'],
       ['Быстрый вход в исследование', 'Переходите к нужным префлоп-сценариям без лишних повторяющихся настроек.'],
       ['Пакетный анализ', 'Обрабатывайте несколько бордов в одном потоке и всегда видьте прогресс работы.'],
     ],
