@@ -59,6 +59,9 @@ export const localizedContent = {
     ecosystemText:
       'TexasSolver GPU supports open data formats, readable data scripts, and range imports that make it easier to fit into surrounding study setups.',
     ecosystem: ['Open data formats', 'Readable data scripts', 'Range import support', 'Friendly to external workflows'],
+    futureTitle: 'And this is only the beginning',
+    futureText:
+      'Behind TexasSolver GPU, we are already building even faster methods, deeper optimizations, and much more ambitious solver technology.',
     faqTitle: 'FAQ',
     faq: [
       ['What platform is supported?', 'The current release is built for Windows.'],
@@ -99,6 +102,8 @@ export const localizedContent = {
     ecosystemTitle: '更贴近真实研究方式',
     ecosystemText: 'TexasSolver GPU 支持开放数据格式、可读取数据脚本和 range 导入，更容易接入你已有的研究流程。',
     ecosystem: ['开放数据格式', '可读取数据脚本', '支持导入 range', '方便接入外部工作流'],
+    futureTitle: '而这还只是开始',
+    futureText: '在 TexasSolver GPU 背后，我们已经在推进更快的方法、更深的优化，以及更激进的新一代求解技术。',
     faqTitle: '常见问题',
     faq: [
       ['支持什么平台？', '当前版本面向 Windows。'],
@@ -139,6 +144,8 @@ export const localizedContent = {
     ecosystemTitle: '실제 연구 방식에 잘 맞는 설계',
     ecosystemText: '오픈 데이터 포맷, 읽기 쉬운 데이터 스크립트, 레인지 가져오기를 통해 기존 연구 흐름과 자연스럽게 연결됩니다.',
     ecosystem: ['오픈 데이터 포맷', '읽기 쉬운 데이터 스크립트', '레인지 가져오기', '외부 워크플로 친화적'],
+    futureTitle: '그리고 이것은 시작에 불과합니다',
+    futureText: 'TexasSolver GPU 뒤에서는 더 빠른 방법론, 더 깊은 최적화, 그리고 훨씬 더 공격적인 차세대 솔버 기술이 계속 개발되고 있습니다.',
     faqTitle: 'FAQ',
     faq: [
       ['어떤 플랫폼을 지원하나요?', '현재 릴리스는 Windows용입니다.'],
@@ -179,6 +186,8 @@ export const localizedContent = {
     ecosystemTitle: '実際の研究スタイルにフィット',
     ecosystemText: 'オープンなデータ形式、読みやすいデータスクリプト、レンジのインポートにより既存の研究環境にも組み込みやすくなります。',
     ecosystem: ['オープンなデータ形式', '読みやすいデータスクリプト', 'レンジのインポート', '外部ワークフローと親和性'],
+    futureTitle: 'そして、これはまだ始まりにすぎません',
+    futureText: 'TexasSolver GPU の背後では、さらに高速な手法、より深い最適化、そして次世代の solver 技術をすでに開発し続けています。',
     faqTitle: 'FAQ',
     faq: [
       ['対応プラットフォームは？', '現在のリリースは Windows 向けです。'],
@@ -219,6 +228,8 @@ export const localizedContent = {
     ecosystemTitle: 'Подходит для реального учебного процесса',
     ecosystemText: 'Открытые форматы данных, читаемые скрипты и импорт диапазонов помогают встроить TexasSolver GPU в существующие исследовательские процессы.',
     ecosystem: ['Открытые форматы данных', 'Читаемые скрипты данных', 'Импорт диапазонов', 'Подходит для внешних рабочих процессов'],
+    futureTitle: 'И это только начало',
+    futureText: 'За TexasSolver GPU уже стоят еще более быстрые методы, более глубокие оптимизации и гораздо более амбициозные solver-технологии следующего поколения.',
     faqTitle: 'FAQ',
     faq: [
       ['Какая платформа поддерживается?', 'Текущий релиз предназначен для Windows.'],

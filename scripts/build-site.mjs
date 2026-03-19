@@ -193,6 +193,14 @@ function renderPage(locale) {
           <div class="point-grid">${ecosystemPoints}</div>
         </section>
 
+        <section class="future-note section-frame">
+          <div class="future-note-inner">
+            <p class="section-label">More Ahead</p>
+            <h2>${escapeHtml(content.futureTitle)}</h2>
+            <p>${escapeHtml(content.futureText)}</p>
+          </div>
+        </section>
+
         <section id="faq" class="faq section-frame">
           <div class="section-intro">
             <p class="section-label">FAQ</p>

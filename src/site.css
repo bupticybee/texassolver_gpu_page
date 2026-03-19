@@ -466,6 +466,30 @@ img {
   gap: 0.9rem;
 }
 
+.future-note {
+  background:
+    radial-gradient(circle at top right, rgba(127, 199, 255, 0.12), transparent 30%),
+    linear-gradient(180deg, rgba(9, 20, 37, 0.96), rgba(7, 14, 26, 0.92));
+}
+
+.future-note-inner {
+  max-width: 840px;
+}
+
+.future-note h2 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.future-note p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
 .site-footer {
   display: flex;
   align-items: center;
