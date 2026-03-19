@@ -4,7 +4,7 @@ export const siteConfig = {
   email: 'icybee@yeah.net',
   contactHref: 'mailto:icybee@yeah.net',
   discordHref: 'https://discord.com/invite/RtyD4vRy2e',
-  githubHref: 'https://github.com/bupticybee',
+  githubHref: 'https://github.com/bupticybee/TexasSolverGPU',
   downloadHref: 'https://github.com/bupticybee/TexasSolverGPU/releases',
   screenshots: {
     logo: 'logo-mark.png',
