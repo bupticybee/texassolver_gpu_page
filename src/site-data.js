@@ -5,7 +5,7 @@ export const siteConfig = {
   contactHref: 'mailto:icybee@yeah.net',
   discordHref: 'https://discord.com/invite/RtyD4vRy2e',
   githubHref: 'https://github.com/bupticybee',
-  downloadHref: 'mailto:icybee@yeah.net?subject=TexasSolver%20GPU%20Download',
+  downloadHref: 'https://github.com/bupticybee/TexasSolverGPU/releases',
   screenshots: {
     logo: 'logo-mark.png',
     tree: 'tree_construction_page.png',
