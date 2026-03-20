@@ -162,8 +162,11 @@ img {
 
 .mobile-menu-btn {
   display: none;
+  appearance: none;
+  -webkit-appearance: none;
   background: transparent;
   border: none;
+  outline: none;
   color: var(--text-main);
   cursor: pointer;
   padding: 0.5rem;

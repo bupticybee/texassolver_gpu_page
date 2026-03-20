@@ -28,25 +28,46 @@ await optimizeImages()
 await writeFile(path.join(distDir, '.nojekyll'), '')
 
 for (const locale of localeOrder) {
-  const folder = locale === 'en' ? distDir : path.join(distDir, locale)
+  const folder = path.join(distDir, locale)
   await mkdir(folder, { recursive: true })
   await writeFile(path.join(folder, 'index.html'), renderPage(locale), 'utf8')
 }
 
+const rootRedirectHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>${siteConfig.productName}</title>
+  <script>
+    var supportedLangs = ${JSON.stringify(localeOrder)};
+    var userLang = navigator.language || navigator.userLanguage || 'en';
+    var shortLang = userLang.split('-')[0];
+    var target = supportedLangs.includes(shortLang) ? shortLang : 'en';
+    try {
+      var saved = localStorage.getItem('preferred_locale');
+      if (saved && supportedLangs.includes(saved)) target = saved;
+    } catch(e) {}
+    window.location.replace('./' + target + '/');
+  </script>
+</head>
+<body></body>
+</html>`
+await writeFile(path.join(distDir, 'index.html'), rootRedirectHtml)
+
 function renderPage(locale) {
   const content = localizedContent[locale]
-  const assetPrefix = locale === 'en' ? './assets' : '../assets'
-  const canonical = locale === 'en' ? `${siteConfig.basePath}/` : `${siteConfig.basePath}/${locale}/`
+  const assetPrefix = '../assets'
+  const canonical = `${siteConfig.basePath}/${locale}/`
   const alternates = localeOrder
     .map((code) => {
-      const href = code === 'en' ? `${siteConfig.basePath}/` : `${siteConfig.basePath}/${code}/`
+      const href = `${siteConfig.basePath}/${code}/`
       return `<link rel="alternate" hreflang="${code}" href="${href}" />`
     })
     .join('\n    ')
 
   const localeOptions = localeOrder
     .map((code) => {
-      const href = code === 'en' ? `${siteConfig.basePath}/` : `${siteConfig.basePath}/${code}/`
+      const href = `${siteConfig.basePath}/${code}/`
       const current = code === locale ? ' aria-current="true"' : ''
       return `<a class="locale-option" href="${href}" data-locale-link="${code}"${current}>${localeLabels[code]}</a>`
     })
@@ -95,7 +116,7 @@ function renderPage(locale) {
     )
     .join('')
 
-  const pageHref = locale === 'en' ? `${siteConfig.basePath}/` : `${siteConfig.basePath}/${locale}/`
+  const pageHref = `${siteConfig.basePath}/${locale}/`
 
   return `<!doctype html>
 <html lang="${content.lang}">
@@ -117,7 +138,7 @@ function renderPage(locale) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${assetPrefix}/site.css" />
+    <link rel="stylesheet" href="${assetPrefix}/site.css?v=2" />
   </head>
   <body data-locale="${locale}" data-base-path="${siteConfig.basePath}">
     <div class="page-shell">
@@ -229,7 +250,7 @@ function renderPage(locale) {
         </div>
       </footer>
     </div>
-    <script type="module" src="${assetPrefix}/runtime.js"></script>
+    <script type="module" src="${assetPrefix}/runtime.js?v=2"></script>
   </body>
 </html>`
 }
