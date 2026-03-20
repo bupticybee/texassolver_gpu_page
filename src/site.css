@@ -320,6 +320,15 @@ img {
 .locale-option {
   display: flex;
   align-items: center;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
   padding: 0.75rem 1rem;
   border-radius: 10px;
   color: var(--text-muted);
