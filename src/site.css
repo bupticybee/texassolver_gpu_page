@@ -523,6 +523,7 @@ img {
 .hero-visual {
   position: relative;
   perspective: 1000px;
+  display: grid;
 }
 
 .hero-orbit {
@@ -542,6 +543,7 @@ img {
 }
 
 .hero-visual img {
+  grid-area: 1 / 1;
   border-radius: var(--border-radius-md);
   border: 1px solid rgba(0, 240, 255, 0.3);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 119, 255, 0.2);
@@ -553,6 +555,25 @@ img {
   transform: rotateY(0deg) rotateX(0deg) scale(1.02);
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), 0 0 60px rgba(0, 240, 255, 0.3);
   border-color: rgba(0, 240, 255, 0.6);
+}
+
+.hero-carousel-img {
+  animation: heroCrossfade 16s ease-in-out infinite;
+}
+
+.hero-visual .img-1 {
+  animation-delay: 0s;
+}
+
+.hero-visual .img-2 {
+  opacity: 0;
+  animation-delay: -8s;
+}
+
+@keyframes heroCrossfade {
+  0%, 40% { opacity: 1; }
+  50%, 90% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 /* Grids & Cards */
