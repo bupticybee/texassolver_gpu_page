@@ -21,6 +21,22 @@ document.addEventListener('click', (e) => {
   }
 })
 
+// Mobile menu toggle logic
+const menuBtn = document.querySelector('.mobile-menu-btn')
+const siteHeader = document.querySelector('.site-header')
+if (menuBtn && siteHeader) {
+  menuBtn.addEventListener('click', () => {
+    siteHeader.classList.toggle('menu-open')
+  })
+}
+
+// Close mobile menu when navigating
+document.querySelectorAll('.top-nav a').forEach((link) => {
+  link.addEventListener('click', () => {
+    if (siteHeader) siteHeader.classList.remove('menu-open')
+  })
+})
+
 const params = new URLSearchParams(window.location.search)
 const paramLocale = params.get('lang')
 

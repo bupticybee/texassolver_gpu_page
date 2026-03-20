@@ -124,22 +124,31 @@ function renderPage(locale) {
       <div class="ambient ambient-left"></div>
       <div class="ambient ambient-right"></div>
       <header class="site-header glass-panel">
-        <a class="brand" href="#top">
-          <img class="brand-mark" src="${assetPrefix}/images/${optimizedScreenshots.logo}" alt="" />
-          <span>${siteConfig.productName}</span>
-        </a>
-        <nav class="top-nav">
-          <a href="#overview">${escapeHtml(content.nav.overview)}</a>
-          <a href="#features">${escapeHtml(content.nav.features)}</a>
-          <a href="#faq">${escapeHtml(content.nav.faq)}</a>
-        </nav>
-        <details class="locale-switcher">
-          <summary>
-            <span class="locale-switcher-label">${escapeHtml(content.nav.language)}</span>
-            <span class="locale-switcher-value">${escapeHtml(localeLabels[locale])}</span>
-          </summary>
-          <div class="locale-menu">${localeOptions}</div>
-        </details>
+        <div class="header-main">
+          <a class="brand" href="#top">
+            <img class="brand-mark" src="${assetPrefix}/images/${optimizedScreenshots.logo}" alt="" />
+            <span>${siteConfig.productName}</span>
+          </a>
+          <button class="mobile-menu-btn" aria-label="Toggle menu">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+        <div class="header-actions">
+          <nav class="top-nav">
+            <a href="#overview">${escapeHtml(content.nav.overview)}</a>
+            <a href="#features">${escapeHtml(content.nav.features)}</a>
+            <a href="#faq">${escapeHtml(content.nav.faq)}</a>
+          </nav>
+          <details class="locale-switcher">
+            <summary>
+              <span class="locale-switcher-label">${escapeHtml(content.nav.language)}</span>
+              <span class="locale-switcher-value">${escapeHtml(localeLabels[locale])}</span>
+            </summary>
+            <div class="locale-menu">${localeOptions}</div>
+          </details>
+        </div>
       </header>
 
       <main id="top">
