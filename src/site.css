@@ -237,6 +237,13 @@ img {
   min-height: 72vh;
 }
 
+@media (min-width: 761px) {
+  .hero.section-frame {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+}
+
 .hero-priority {
   display: flex;
   flex-wrap: wrap;
