@@ -223,7 +223,6 @@ function renderPage() {
           <a href="${siteConfig.discordHref}" target="_blank" rel="noreferrer" data-i18n="footer.discord">${escapeHtml(content.footer.discord)}</a>
           <a href="${siteConfig.contactHref}" data-i18n="footer.contact">${escapeHtml(content.footer.contact)}</a>
           <a href="${siteConfig.githubHref}" target="_blank" rel="noreferrer" data-i18n="footer.github">${escapeHtml(content.footer.github)}</a>
-          <span data-i18n="hero.platform">${escapeHtml(content.hero.platform)}</span>
           <span data-i18n="hero.free">${escapeHtml(content.hero.free)}</span>
         </div>
       </footer>

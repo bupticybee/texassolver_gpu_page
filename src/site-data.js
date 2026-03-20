@@ -86,7 +86,7 @@ export const localizedContent = {
       discord: '加入 Discord',
       contact: '联系我',
       platform: '仅支持 Windows',
-      free: '个人完全免费',
+      free: '对个人完全免费',
       claim: '世界第一个 GPU Solver',
     },
     valuesTitle: 'GPU 直接改变了求解速度上限',
