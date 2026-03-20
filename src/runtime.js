@@ -1,18 +1,3 @@
-const localeOrder = ['en', 'zh', 'ko', 'ja', 'ru']
-const storageKey = 'texassolver_gpu_locale'
-
-const currentLocale = document.body.dataset.locale || 'en'
-const basePath = document.body.dataset.basePath || ''
-const localeLinks = document.querySelectorAll('[data-locale-link]')
-
-localeLinks.forEach((link) => {
-  link.addEventListener('click', (event) => {
-    const nextLocale = event.currentTarget.getAttribute('data-locale-link')
-    if (!localeOrder.includes(nextLocale)) return
-    localStorage.setItem(storageKey, nextLocale)
-  })
-})
-
 // Close dropdown when clicking outside
 document.addEventListener('click', (e) => {
   const switcher = document.querySelector('.locale-switcher')
@@ -37,30 +22,96 @@ document.querySelectorAll('.top-nav a').forEach((link) => {
   })
 })
 
-const params = new URLSearchParams(window.location.search)
-const paramLocale = params.get('lang')
+function escapeHtml(input) {
+  return String(input)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+}
 
-if (paramLocale && localeOrder.includes(paramLocale) && paramLocale !== currentLocale) {
-  localStorage.setItem(storageKey, paramLocale)
-  window.location.replace(buildLocaleUrl(paramLocale))
-} else if (!paramLocale) {
-  const storedLocale = localStorage.getItem(storageKey)
-  const browserLocale = matchLocale((navigator.language || '').toLowerCase())
-  const desiredLocale = storedLocale || browserLocale
-  const isRootPage = currentLocale === 'en' && window.location.pathname.replace(/\/+$/, '').endsWith('texassolver_gpu_page')
+function applyLanguage(lang) {
+  if (!window.i18nData || !window.i18nData[lang]) return;
+  const db = window.i18nData[lang];
+  const featDb = window.featureData;
+  const labels = window.labelsData;
 
-  if (isRootPage && desiredLocale && desiredLocale !== 'en') {
-    window.location.replace(buildLocaleUrl(desiredLocale))
+  document.documentElement.lang = db.lang || lang;
+  
+  // Standard translations
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const path = el.getAttribute('data-i18n').split('.');
+    let val = db;
+    for (const k of path) {
+      if (val != null) val = val[k];
+    }
+    
+    if (val !== undefined) {
+      if (el.tagName === 'META') {
+        el.setAttribute('content', val);
+      } else if (el.tagName === 'TITLE') {
+        document.title = val;
+      } else {
+        el.innerHTML = escapeHtml(val);
+      }
+    }
+  });
+
+  // Feature translations
+  document.querySelectorAll('[data-i18n-feat]').forEach(el => {
+    const path = el.getAttribute('data-i18n-feat').split('.');
+    if (featDb[path[0]] && featDb[path[0]][lang]) {
+      const val = featDb[path[0]][lang][path[1]];
+      if (val !== undefined) {
+        el.innerHTML = escapeHtml(val);
+      }
+    }
+  });
+
+  // Update current locale display
+  const display = document.getElementById('current-locale-display');
+  if (display && labels[lang]) {
+    display.innerText = labels[lang];
   }
+  
+  // Highlight active option
+  document.querySelectorAll('.locale-option').forEach(el => {
+    if (el.getAttribute('data-set-locale') === lang) {
+      el.setAttribute('aria-current', 'true');
+    } else {
+      el.removeAttribute('aria-current');
+    }
+  });
 }
 
-localStorage.setItem(storageKey, currentLocale)
-
-function buildLocaleUrl(locale) {
-  const normalizedBase = basePath.replace(/\/$/, '')
-  return locale === 'en' ? `${normalizedBase}/` : `${normalizedBase}/${locale}/`
+function initLanguage() {
+  if (!window.supportedLangs) return;
+  let saved = localStorage.getItem('preferred_locale');
+  let lang = saved;
+  
+  if (!lang) {
+    let userLang = navigator.language || navigator.userLanguage || 'en';
+    lang = userLang.split('-')[0];
+  }
+  if (!window.supportedLangs.includes(lang)) {
+    lang = 'en';
+  }
+  applyLanguage(lang);
 }
 
-function matchLocale(language) {
-  return localeOrder.find((locale) => language === locale || language.startsWith(`${locale}-`)) || ''
-}
+// Ensure it runs once initially before body displays if positioned directly
+initLanguage();
+
+// Handle locale switching interactions
+document.querySelectorAll('.locale-option').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const lang = btn.getAttribute('data-set-locale');
+    if (lang) {
+      localStorage.setItem('preferred_locale', lang);
+      applyLanguage(lang);
+      const switcher = document.querySelector('.locale-switcher');
+      if (switcher) switcher.removeAttribute('open');
+    }
+  });
+});

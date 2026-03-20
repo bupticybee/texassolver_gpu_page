@@ -27,120 +27,94 @@ await cp(path.join(rootDir, 'src', 'runtime.js'), path.join(assetDir, 'runtime.j
 await optimizeImages()
 await writeFile(path.join(distDir, '.nojekyll'), '')
 
-for (const locale of localeOrder) {
-  const folder = path.join(distDir, locale)
-  await mkdir(folder, { recursive: true })
-  await writeFile(path.join(folder, 'index.html'), renderPage(locale), 'utf8')
-}
+await writeFile(path.join(distDir, 'index.html'), renderPage(), 'utf8')
 
-const rootRedirectHtml = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>${siteConfig.productName}</title>
-  <script>
-    var supportedLangs = ${JSON.stringify(localeOrder)};
-    var userLang = navigator.language || navigator.userLanguage || 'en';
-    var shortLang = userLang.split('-')[0];
-    var target = supportedLangs.includes(shortLang) ? shortLang : 'en';
-    try {
-      var saved = localStorage.getItem('preferred_locale');
-      if (saved && supportedLangs.includes(saved)) target = saved;
-    } catch(e) {}
-    window.location.replace('./' + target + '/');
-  </script>
-</head>
-<body></body>
-</html>`
-await writeFile(path.join(distDir, 'index.html'), rootRedirectHtml)
-
-function renderPage(locale) {
-  const content = localizedContent[locale]
-  const assetPrefix = '../assets'
-  const canonical = `${siteConfig.basePath}/${locale}/`
-  const alternates = localeOrder
-    .map((code) => {
-      const href = `${siteConfig.basePath}/${code}/`
-      return `<link rel="alternate" hreflang="${code}" href="${href}" />`
-    })
-    .join('\n    ')
+function renderPage() {
+  const baseLocale = 'en'
+  const content = localizedContent[baseLocale]
+  const assetPrefix = './assets'
+  const canonical = `${siteConfig.basePath}/`
 
   const localeOptions = localeOrder
     .map((code) => {
-      const href = `${siteConfig.basePath}/${code}/`
-      const current = code === locale ? ' aria-current="true"' : ''
-      return `<a class="locale-option" href="${href}" data-locale-link="${code}"${current}>${localeLabels[code]}</a>`
+      return `<button class="locale-option" data-set-locale="${code}">${localeLabels[code]}</button>`
     })
     .join('')
 
   const valueCards = content.values
     .map(
-      ([title, description]) => `
+      ([title, description], i) => `
           <article class="value-card">
-            <h3>${escapeHtml(title)}</h3>
-            <p>${escapeHtml(description)}</p>
+            <h3 data-i18n="values.${i}.0">${escapeHtml(title)}</h3>
+            <p data-i18n="values.${i}.1">${escapeHtml(description)}</p>
           </article>`,
     )
     .join('')
 
   const featureCards = featureOrder
     .map((key, index) => {
-      const [title, accent, body] = featureContent[key][locale]
+      const [title, accent, body] = featureContent[key][baseLocale]
       const image = optimizedScreenshots[key]
       const reverse = index % 2 === 1 ? ' reverse' : ''
       return `
         <article class="feature-card${reverse}">
           <div class="feature-copy">
-            <p class="feature-accent">${escapeHtml(accent)}</p>
-            <h3>${escapeHtml(title)}</h3>
-            <p>${escapeHtml(body)}</p>
+            <p class="feature-accent" data-i18n-feat="${key}.1">${escapeHtml(accent)}</p>
+            <h3 data-i18n-feat="${key}.0">${escapeHtml(title)}</h3>
+            <p data-i18n-feat="${key}.2">${escapeHtml(body)}</p>
           </div>
           <div class="feature-media">
-            <img src="${assetPrefix}/images/${image}" alt="${escapeHtml(title)}" loading="lazy" />
+            <div class="image-mask">
+              <img src="${assetPrefix}/images/${image}" alt="" loading="lazy" />
+            </div>
           </div>
         </article>`
     })
     .join('')
 
   const ecosystemPoints = content.ecosystem
-    .map((point) => `<div class="point-pill">${escapeHtml(point)}</div>`)
+    .map((point, i) => `<div class="point-pill" data-i18n="ecosystem.${i}">${escapeHtml(point)}</div>`)
     .join('')
 
   const faqItems = content.faq
     .map(
-      ([question, answer]) => `
+      ([question, answer], i) => `
           <article class="faq-item">
-            <h3>${escapeHtml(question)}</h3>
-            <p>${escapeHtml(answer)}</p>
+            <h3 data-i18n="faq.${i}.0">${escapeHtml(question)}</h3>
+            <p data-i18n="faq.${i}.1">${escapeHtml(answer)}</p>
           </article>`,
     )
     .join('')
 
-  const pageHref = `${siteConfig.basePath}/${locale}/`
+  const pageHref = canonical
 
   return `<!doctype html>
 <html lang="${content.lang}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${escapeHtml(content.title)}</title>
-    <meta name="description" content="${escapeHtml(content.description)}" />
-    <meta property="og:title" content="${escapeHtml(content.title)}" />
-    <meta property="og:description" content="${escapeHtml(content.description)}" />
+    <title data-i18n="title">${escapeHtml(content.title)}</title>
+    <meta name="description" data-i18n="description" content="${escapeHtml(content.description)}" />
+    <meta property="og:title" data-i18n="title" content="${escapeHtml(content.title)}" />
+    <meta property="og:description" data-i18n="description" content="${escapeHtml(content.description)}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${pageHref}" />
     <meta property="og:image" content="${assetPrefix}/images/${optimizedScreenshots.tree}" />
     <meta name="robots" content="index,follow" />
     <link rel="icon" type="image/png" href="${assetPrefix}/images/${optimizedScreenshots.favicon}" />
     <link rel="canonical" href="${canonical}" />
-    <link rel="alternate" hreflang="x-default" href="${siteConfig.basePath}/" />
-    ${alternates}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${assetPrefix}/site.css?v=2" />
+    <link rel="stylesheet" href="${assetPrefix}/site.css?v=3" />
+    <script>
+      window.i18nData = ${JSON.stringify(localizedContent)};
+      window.featureData = ${JSON.stringify(featureContent)};
+      window.labelsData = ${JSON.stringify(localeLabels)};
+      window.supportedLangs = ${JSON.stringify(localeOrder)};
+    </script>
   </head>
-  <body data-locale="${locale}" data-base-path="${siteConfig.basePath}">
+  <body data-base-path="${siteConfig.basePath}">
     <div class="page-shell">
       <div class="ambient ambient-left"></div>
       <div class="ambient ambient-right"></div>
@@ -158,14 +132,14 @@ function renderPage(locale) {
         </div>
         <div class="header-actions">
           <nav class="top-nav">
-            <a href="#overview">${escapeHtml(content.nav.overview)}</a>
-            <a href="#features">${escapeHtml(content.nav.features)}</a>
-            <a href="#faq">${escapeHtml(content.nav.faq)}</a>
+            <a href="#overview" data-i18n="nav.overview">${escapeHtml(content.nav.overview)}</a>
+            <a href="#features" data-i18n="nav.features">${escapeHtml(content.nav.features)}</a>
+            <a href="#faq" data-i18n="nav.faq">${escapeHtml(content.nav.faq)}</a>
           </nav>
           <details class="locale-switcher">
             <summary>
-              <span class="locale-switcher-label">${escapeHtml(content.nav.language)}</span>
-              <span class="locale-switcher-value">${escapeHtml(localeLabels[locale])}</span>
+              <span class="locale-switcher-label" data-i18n="nav.language">${escapeHtml(content.nav.language)}</span>
+              <span class="locale-switcher-value" id="current-locale-display">${escapeHtml(localeLabels[baseLocale])}</span>
             </summary>
             <div class="locale-menu">${localeOptions}</div>
           </details>
@@ -175,13 +149,13 @@ function renderPage(locale) {
       <main id="top">
         <section class="hero section-frame">
           <div class="hero-copy">
-            <p class="eyebrow">${escapeHtml(content.hero.eyebrow)}</p>
-            <h1>${escapeHtml(content.hero.title)}</h1>
-            <p class="hero-description">${escapeHtml(content.hero.description)}</p>
+            <p class="eyebrow" data-i18n="hero.eyebrow">${escapeHtml(content.hero.eyebrow)}</p>
+            <h1 data-i18n="hero.title">${escapeHtml(content.hero.title)}</h1>
+            <p class="hero-description" data-i18n="hero.description">${escapeHtml(content.hero.description)}</p>
             <div class="cta-row">
-              ${renderButton(siteConfig.downloadHref, content.hero.download, 'primary', true)}
-              ${renderButton(siteConfig.discordHref, content.hero.discord, 'secondary', true)}
-              ${renderButton(siteConfig.contactHref, content.hero.contact, 'secondary', false)}
+              ${renderButton(siteConfig.downloadHref, content.hero.download, 'hero.download', 'primary', true)}
+              ${renderButton(siteConfig.discordHref, content.hero.discord, 'hero.discord', 'secondary', true)}
+              ${renderButton(siteConfig.contactHref, content.hero.contact, 'hero.contact', 'secondary', false)}
             </div>
           </div>
           <div class="hero-visual">
@@ -192,9 +166,9 @@ function renderPage(locale) {
 
         <section id="overview" class="values section-frame glass-panel">
           <div class="section-intro">
-            <p class="section-label">${escapeHtml(content.nav.overview)}</p>
-            <h2>${escapeHtml(content.valuesTitle)}</h2>
-            <p>${escapeHtml(content.valuesText)}</p>
+            <p class="section-label" data-i18n="nav.overview">${escapeHtml(content.nav.overview)}</p>
+            <h2 data-i18n="valuesTitle">${escapeHtml(content.valuesTitle)}</h2>
+            <p data-i18n="valuesText">${escapeHtml(content.valuesText)}</p>
           </div>
           <div class="value-grid">${valueCards}
           </div>
@@ -202,9 +176,9 @@ function renderPage(locale) {
 
         <section id="features" class="features section-frame glass-panel">
           <div class="section-intro">
-            <p class="section-label">${escapeHtml(content.nav.features)}</p>
-            <h2>${escapeHtml(content.featuresTitle)}</h2>
-            <p>${escapeHtml(content.featuresText)}</p>
+            <p class="section-label" data-i18n="nav.features">${escapeHtml(content.nav.features)}</p>
+            <h2 data-i18n="featuresTitle">${escapeHtml(content.featuresTitle)}</h2>
+            <p data-i18n="featuresText">${escapeHtml(content.featuresText)}</p>
           </div>
           ${featureCards}
         </section>
@@ -212,8 +186,8 @@ function renderPage(locale) {
         <section class="ecosystem section-frame glass-panel">
           <div class="section-intro">
             <p class="section-label">Workflow</p>
-            <h2>${escapeHtml(content.ecosystemTitle)}</h2>
-            <p>${escapeHtml(content.ecosystemText)}</p>
+            <h2 data-i18n="ecosystemTitle">${escapeHtml(content.ecosystemTitle)}</h2>
+            <p data-i18n="ecosystemText">${escapeHtml(content.ecosystemText)}</p>
           </div>
           <div class="point-grid">${ecosystemPoints}</div>
         </section>
@@ -221,15 +195,15 @@ function renderPage(locale) {
         <section class="future-note section-frame glass-panel">
           <div class="future-note-inner">
             <p class="section-label">More Ahead</p>
-            <h2>${escapeHtml(content.futureTitle)}</h2>
-            <p>${escapeHtml(content.futureText)}</p>
+            <h2 data-i18n="futureTitle">${escapeHtml(content.futureTitle)}</h2>
+            <p data-i18n="futureText">${escapeHtml(content.futureText)}</p>
           </div>
         </section>
 
         <section id="faq" class="faq section-frame glass-panel">
           <div class="section-intro">
             <p class="section-label">FAQ</p>
-            <h2>${escapeHtml(content.faqTitle)}</h2>
+            <h2 data-i18n="faqTitle">${escapeHtml(content.faqTitle)}</h2>
           </div>
           <div class="faq-grid">${faqItems}
           </div>
@@ -239,25 +213,25 @@ function renderPage(locale) {
       <footer class="site-footer section-frame">
         <div>
           <a class="brand footer-brand" href="#top">${siteConfig.productName}</a>
-          <p>${escapeHtml(content.footer.rights)}</p>
+          <p data-i18n="footer.rights">${escapeHtml(content.footer.rights)}</p>
         </div>
         <div class="footer-links">
-          <a href="${siteConfig.discordHref}" target="_blank" rel="noreferrer">${escapeHtml(content.footer.discord)}</a>
-          <a href="${siteConfig.contactHref}">${escapeHtml(content.footer.contact)}</a>
-          <a href="${siteConfig.githubHref}" target="_blank" rel="noreferrer">${escapeHtml(content.footer.github)}</a>
-          <span>${escapeHtml(content.hero.platform)}</span>
-          <span>${escapeHtml(content.hero.free)}</span>
+          <a href="${siteConfig.discordHref}" target="_blank" rel="noreferrer" data-i18n="footer.discord">${escapeHtml(content.footer.discord)}</a>
+          <a href="${siteConfig.contactHref}" data-i18n="footer.contact">${escapeHtml(content.footer.contact)}</a>
+          <a href="${siteConfig.githubHref}" target="_blank" rel="noreferrer" data-i18n="footer.github">${escapeHtml(content.footer.github)}</a>
+          <span data-i18n="hero.platform">${escapeHtml(content.hero.platform)}</span>
+          <span data-i18n="hero.free">${escapeHtml(content.hero.free)}</span>
         </div>
       </footer>
     </div>
-    <script type="module" src="${assetPrefix}/runtime.js?v=2"></script>
+    <script src="${assetPrefix}/runtime.js?v=3"></script>
   </body>
 </html>`
 }
 
-function renderButton(href, label, variant, external) {
+function renderButton(href, fallbackLabel, i18nKey, variant, external) {
   const attrs = external ? ' target="_blank" rel="noreferrer"' : ''
-  return `<a class="button button-${variant}" href="${href}"${attrs}>${escapeHtml(label)}</a>`
+  return `<a class="button button-${variant}" href="${href}"${attrs} data-i18n="${i18nKey}">${escapeHtml(fallbackLabel)}</a>`
 }
 
 function escapeHtml(input) {
@@ -287,7 +261,7 @@ async function buildWebp(input, output, width, quality, cropRight = false) {
   let pipeline = sharp(input)
   if (cropRight) {
     const metadata = await pipeline.metadata()
-    const cropWidth = Math.floor(metadata.width * 0.98) // Crop 2% from the right to hide scrollbar
+    const cropWidth = Math.floor(metadata.width * 0.98)
     pipeline = sharp(input).extract({ left: 0, top: 0, width: cropWidth, height: metadata.height })
   }
   return pipeline
