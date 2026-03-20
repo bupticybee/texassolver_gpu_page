@@ -558,7 +558,7 @@ img {
 }
 
 .hero-carousel-img {
-  animation: heroCrossfade 16s ease-in-out infinite;
+  animation: heroCrossfade 6s ease-in-out infinite;
 }
 
 .hero-visual .img-1 {
@@ -567,7 +567,7 @@ img {
 
 .hero-visual .img-2 {
   opacity: 0;
-  animation-delay: -8s;
+  animation-delay: -3s;
 }
 
 @keyframes heroCrossfade {
