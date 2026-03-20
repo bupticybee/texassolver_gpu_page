@@ -235,6 +235,8 @@ img {
   gap: clamp(24px, 3vw, 40px);
   align-items: center;
   min-height: 60vh;
+  padding-top: clamp(6px, 1vw, 12px);
+  padding-bottom: clamp(4px, 0.8vw, 10px);
 }
 
 .hero-priority {
@@ -552,6 +554,8 @@ img {
 
   .hero {
     min-height: auto;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   .hero h1,
