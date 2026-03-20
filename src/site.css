@@ -219,7 +219,7 @@ img {
 
 .section-frame {
   margin-bottom: 28px;
-  padding: clamp(22px, 3.2vw, 32px);
+  padding: clamp(24px, 4vw, 40px);
   background:
     linear-gradient(180deg, rgba(13, 25, 44, 0.92), rgba(8, 15, 28, 0.88)),
     linear-gradient(90deg, rgba(127, 199, 255, 0.03), rgba(152, 255, 244, 0.03));
@@ -234,9 +234,7 @@ img {
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   gap: clamp(24px, 3vw, 40px);
   align-items: center;
-  min-height: 60vh;
-  padding-top: clamp(6px, 1vw, 12px);
-  padding-bottom: clamp(4px, 0.8vw, 10px);
+  min-height: 72vh;
 }
 
 .hero-priority {
@@ -554,8 +552,6 @@ img {
 
   .hero {
     min-height: auto;
-    padding-top: 0;
-    padding-bottom: 0;
   }
 
   .hero h1,
