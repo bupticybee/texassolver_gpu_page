@@ -114,13 +114,16 @@ function renderPage(locale) {
     <link rel="canonical" href="${canonical}" />
     <link rel="alternate" hreflang="x-default" href="${siteConfig.basePath}/" />
     ${alternates}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${assetPrefix}/site.css" />
   </head>
   <body data-locale="${locale}" data-base-path="${siteConfig.basePath}">
     <div class="page-shell">
       <div class="ambient ambient-left"></div>
       <div class="ambient ambient-right"></div>
-      <header class="site-header">
+      <header class="site-header glass-panel">
         <a class="brand" href="#top">
           <img class="brand-mark" src="${assetPrefix}/images/${optimizedScreenshots.logo}" alt="" />
           <span>${siteConfig.productName}</span>
@@ -148,7 +151,7 @@ function renderPage(locale) {
             <div class="cta-row">
               ${renderButton(siteConfig.downloadHref, content.hero.download, 'primary', true)}
               ${renderButton(siteConfig.discordHref, content.hero.discord, 'secondary', true)}
-              ${renderButton(siteConfig.contactHref, content.hero.contact, 'ghost', false)}
+              ${renderButton(siteConfig.contactHref, content.hero.contact, 'secondary', false)}
             </div>
           </div>
           <div class="hero-visual">
@@ -157,7 +160,7 @@ function renderPage(locale) {
           </div>
         </section>
 
-        <section id="overview" class="values section-frame">
+        <section id="overview" class="values section-frame glass-panel">
           <div class="section-intro">
             <p class="section-label">${escapeHtml(content.nav.overview)}</p>
             <h2>${escapeHtml(content.valuesTitle)}</h2>
@@ -167,7 +170,7 @@ function renderPage(locale) {
           </div>
         </section>
 
-        <section id="features" class="features section-frame">
+        <section id="features" class="features section-frame glass-panel">
           <div class="section-intro">
             <p class="section-label">${escapeHtml(content.nav.features)}</p>
             <h2>${escapeHtml(content.featuresTitle)}</h2>
@@ -176,7 +179,7 @@ function renderPage(locale) {
           ${featureCards}
         </section>
 
-        <section class="ecosystem section-frame">
+        <section class="ecosystem section-frame glass-panel">
           <div class="section-intro">
             <p class="section-label">Workflow</p>
             <h2>${escapeHtml(content.ecosystemTitle)}</h2>
@@ -185,7 +188,7 @@ function renderPage(locale) {
           <div class="point-grid">${ecosystemPoints}</div>
         </section>
 
-        <section class="future-note section-frame">
+        <section class="future-note section-frame glass-panel">
           <div class="future-note-inner">
             <p class="section-label">More Ahead</p>
             <h2>${escapeHtml(content.futureTitle)}</h2>
@@ -193,7 +196,7 @@ function renderPage(locale) {
           </div>
         </section>
 
-        <section id="faq" class="faq section-frame">
+        <section id="faq" class="faq section-frame glass-panel">
           <div class="section-intro">
             <p class="section-label">FAQ</p>
             <h2>${escapeHtml(content.faqTitle)}</h2>
@@ -238,20 +241,26 @@ function escapeHtml(input) {
 async function optimizeImages() {
   const rawImageDir = path.join(rootDir, 'raw_images')
   const jobs = [
-    buildWebp(path.join(rootDir, 'src', 'logo-mark.png'), path.join(screenshotDir, optimizedScreenshots.logo), 192, 82),
+    buildWebp(path.join(rootDir, 'src', 'logo-mark.png'), path.join(screenshotDir, optimizedScreenshots.logo), 192, 82, false),
     buildPng(path.join(rootDir, 'src', 'logo-mark.png'), path.join(screenshotDir, optimizedScreenshots.favicon), 64),
-    buildWebp(path.join(rawImageDir, siteConfig.screenshots.tree), path.join(screenshotDir, optimizedScreenshots.tree), 1600, 82),
-    buildWebp(path.join(rawImageDir, siteConfig.screenshots.quickStart), path.join(screenshotDir, optimizedScreenshots.quickStart), 1600, 80),
-    buildWebp(path.join(rawImageDir, siteConfig.screenshots.nodeLock), path.join(screenshotDir, optimizedScreenshots.nodeLock), 1600, 80),
-    buildWebp(path.join(rawImageDir, siteConfig.screenshots.batch), path.join(screenshotDir, optimizedScreenshots.batch), 1600, 80),
-    buildWebp(path.join(rawImageDir, siteConfig.screenshots.play), path.join(screenshotDir, optimizedScreenshots.play), 1600, 80),
+    buildWebp(path.join(rawImageDir, siteConfig.screenshots.tree), path.join(screenshotDir, optimizedScreenshots.tree), 1600, 82, true),
+    buildWebp(path.join(rawImageDir, siteConfig.screenshots.quickStart), path.join(screenshotDir, optimizedScreenshots.quickStart), 1600, 80, true),
+    buildWebp(path.join(rawImageDir, siteConfig.screenshots.nodeLock), path.join(screenshotDir, optimizedScreenshots.nodeLock), 1600, 80, true),
+    buildWebp(path.join(rawImageDir, siteConfig.screenshots.batch), path.join(screenshotDir, optimizedScreenshots.batch), 1600, 80, true),
+    buildWebp(path.join(rawImageDir, siteConfig.screenshots.play), path.join(screenshotDir, optimizedScreenshots.play), 1600, 80, true),
   ]
 
   await Promise.all(jobs)
 }
 
-function buildWebp(input, output, width, quality) {
-  return sharp(input)
+async function buildWebp(input, output, width, quality, cropRight = false) {
+  let pipeline = sharp(input)
+  if (cropRight) {
+    const metadata = await pipeline.metadata()
+    const cropWidth = Math.floor(metadata.width * 0.98) // Crop 2% from the right to hide scrollbar
+    pipeline = sharp(input).extract({ left: 0, top: 0, width: cropWidth, height: metadata.height })
+  }
+  return pipeline
     .resize({ width, withoutEnlargement: true })
     .webp({ quality })
     .toFile(output)

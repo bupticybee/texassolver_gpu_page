@@ -13,6 +13,14 @@ localeLinks.forEach((link) => {
   })
 })
 
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  const switcher = document.querySelector('.locale-switcher')
+  if (switcher && switcher.hasAttribute('open') && !switcher.contains(e.target)) {
+    switcher.removeAttribute('open')
+  }
+})
+
 const params = new URLSearchParams(window.location.search)
 const paramLocale = params.get('lang')
 
