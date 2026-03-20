@@ -558,21 +558,20 @@ img {
 }
 
 .hero-carousel-img {
-  animation: heroCrossfade 10s ease-in-out infinite;
+  animation: heroCrossfade 25s ease-in-out infinite;
 }
 
-.hero-visual .img-1 {
-  animation-delay: 0s;
-}
-
-.hero-visual .img-2 {
-  opacity: 0;
-  animation-delay: -5s;
-}
+.hero-visual .img-1 { animation-delay: 0s; }
+.hero-visual .img-2 { opacity: 0; animation-delay: -20s; }
+.hero-visual .img-3 { opacity: 0; animation-delay: -15s; }
+.hero-visual .img-4 { opacity: 0; animation-delay: -10s; }
+.hero-visual .img-5 { opacity: 0; animation-delay: -5s; }
 
 @keyframes heroCrossfade {
-  0%, 40% { opacity: 1; }
-  50%, 90% { opacity: 0; }
+  0% { opacity: 1; }
+  16% { opacity: 1; }
+  20% { opacity: 0; }
+  96% { opacity: 0; }
   100% { opacity: 1; }
 }
 

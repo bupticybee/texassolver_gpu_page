@@ -166,6 +166,9 @@ function renderPage() {
             <div class="hero-orbit"></div>
             <img src="${assetPrefix}/images/${optimizedScreenshots.play}" alt="TexasSolver GPU play against strategy" fetchpriority="high" class="hero-carousel-img img-1" />
             <img src="${assetPrefix}/images/${optimizedScreenshots.tree}" alt="TexasSolver GPU tree configuration" fetchpriority="high" class="hero-carousel-img img-2" />
+            <img src="${assetPrefix}/images/${optimizedScreenshots.quickStart}" alt="TexasSolver GPU quick start" fetchpriority="high" class="hero-carousel-img img-3" />
+            <img src="${assetPrefix}/images/${optimizedScreenshots.nodeLock}" alt="TexasSolver GPU node lock" fetchpriority="high" class="hero-carousel-img img-4" />
+            <img src="${assetPrefix}/images/${optimizedScreenshots.batch}" alt="TexasSolver GPU batch solving" fetchpriority="high" class="hero-carousel-img img-5" />
           </div>
         </section>
 
