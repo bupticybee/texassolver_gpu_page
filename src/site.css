@@ -239,44 +239,13 @@ img {
 
 @media (min-width: 761px) {
   .hero.section-frame {
-    padding-top: 18px;
-    padding-bottom: 18px;
+    padding: 46px clamp(24px, 4vw, 40px);
   }
 
   .hero {
     min-height: auto;
     align-items: start;
   }
-}
-
-.hero-priority {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.hero-priority-pill {
-  display: inline-flex;
-  align-items: center;
-  min-height: 42px;
-  padding: 0.7rem 1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(127, 199, 255, 0.22);
-  font-size: 0.92rem;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-}
-
-.hero-priority-free {
-  background: linear-gradient(135deg, rgba(157, 244, 255, 0.18), rgba(112, 197, 255, 0.26));
-  color: #dffcff;
-  box-shadow: 0 12px 30px rgba(114, 204, 255, 0.18);
-}
-
-.hero-priority-claim {
-  background: rgba(10, 24, 43, 0.9);
-  color: var(--brand-strong);
 }
 
 .eyebrow,
@@ -289,6 +258,17 @@ img {
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--brand-strong);
+}
+
+.hero .eyebrow {
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.hero .eyebrow::before {
+  width: 3.4rem;
 }
 
 .eyebrow::before,
@@ -337,7 +317,7 @@ img {
   align-items: center;
   justify-content: center;
   min-height: 52px;
-  padding: 0.9rem 1.35rem;
+  padding: 0.9rem 2.7rem;
   border-radius: 999px;
   border: 1px solid transparent;
   font-weight: 700;
@@ -584,15 +564,6 @@ img {
   .cta-row {
     display: grid;
     grid-template-columns: 1fr;
-  }
-
-  .hero-priority {
-    gap: 0.6rem;
-  }
-
-  .hero-priority-pill {
-    width: 100%;
-    justify-content: center;
   }
 
   .button {

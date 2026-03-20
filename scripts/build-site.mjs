@@ -142,10 +142,6 @@ function renderPage(locale) {
       <main id="top">
         <section class="hero section-frame">
           <div class="hero-copy">
-            <div class="hero-priority">
-              <span class="hero-priority-pill hero-priority-free">${escapeHtml(content.hero.free)}</span>
-              <span class="hero-priority-pill hero-priority-claim">${escapeHtml(content.hero.claim)}</span>
-            </div>
             <p class="eyebrow">${escapeHtml(content.hero.eyebrow)}</p>
             <h1>${escapeHtml(content.hero.title)}</h1>
             <p class="hero-description">${escapeHtml(content.hero.description)}</p>
@@ -153,10 +149,6 @@ function renderPage(locale) {
               ${renderButton(siteConfig.downloadHref, content.hero.download, 'primary', true)}
               ${renderButton(siteConfig.discordHref, content.hero.discord, 'secondary', true)}
               ${renderButton(siteConfig.contactHref, content.hero.contact, 'ghost', false)}
-            </div>
-            <div class="hero-tags">
-              <span>${escapeHtml(content.hero.platform)}</span>
-              <span>${escapeHtml(content.hero.free)}</span>
             </div>
           </div>
           <div class="hero-visual">
