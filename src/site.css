@@ -242,6 +242,10 @@ img {
     padding-top: 18px;
     padding-bottom: 18px;
   }
+
+  .hero {
+    min-height: auto;
+  }
 }
 
 .hero-priority {
