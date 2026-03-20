@@ -34,6 +34,7 @@ function renderPage() {
   const content = localizedContent[baseLocale]
   const assetPrefix = './assets'
   const canonical = `${siteConfig.basePath}/`
+  const buildHash = Date.now().toString(36)
 
   const localeOptions = localeOrder
     .map((code) => {
@@ -93,6 +94,9 @@ function renderPage() {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title data-i18n="title">${escapeHtml(content.title)}</title>
     <meta name="description" data-i18n="description" content="${escapeHtml(content.description)}" />
     <meta property="og:title" data-i18n="title" content="${escapeHtml(content.title)}" />
@@ -106,7 +110,7 @@ function renderPage() {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${assetPrefix}/site.css?v=3" />
+    <link rel="stylesheet" href="${assetPrefix}/site.css?v=${buildHash}" />
     <script>
       window.i18nData = ${JSON.stringify(localizedContent)};
       window.featureData = ${JSON.stringify(featureContent)};
@@ -224,7 +228,7 @@ function renderPage() {
         </div>
       </footer>
     </div>
-    <script src="${assetPrefix}/runtime.js?v=3"></script>
+    <script src="${assetPrefix}/runtime.js?v=${buildHash}"></script>
   </body>
 </html>`
 }
