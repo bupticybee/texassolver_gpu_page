@@ -150,7 +150,7 @@ function renderPage(locale) {
             <h1>${escapeHtml(content.hero.title)}</h1>
             <p class="hero-description">${escapeHtml(content.hero.description)}</p>
             <div class="cta-row">
-              ${renderButton(siteConfig.downloadHref, content.hero.download, 'primary', false)}
+              ${renderButton(siteConfig.downloadHref, content.hero.download, 'primary', true)}
               ${renderButton(siteConfig.discordHref, content.hero.discord, 'secondary', true)}
               ${renderButton(siteConfig.contactHref, content.hero.contact, 'ghost', false)}
             </div>
