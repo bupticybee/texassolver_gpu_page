@@ -6,6 +6,7 @@ export const siteConfig = {
   discordHref: 'https://discord.com/invite/RtyD4vRy2e',
   githubHref: 'https://github.com/bupticybee/TexasSolverGPU',
   downloadHref: 'https://github.com/bupticybee/TexasSolverGPU/releases',
+  tutorialHref: 'https://www.youtube.com/watch?v=jAI_yudEGJw&list=PLKQz8vKPRvhmWz8lOUZjeLo7GQyG2ebu-',
   screenshots: {
     logo: 'logo-mark.png',
     tree: 'tree_construction_page.png',
@@ -39,6 +40,7 @@ export const localizedContent = {
       description:
         'TexasSolver GPU is built for faster solving, quick spot entry, batch analysis, node locking, and strategy training in one focused workspace.',
       download: 'Download for Free',
+      tutorial: 'Video Tutorial',
       discord: 'Join Discord',
       contact: 'Contact',
       platform: 'Windows Only',
@@ -83,6 +85,7 @@ export const localizedContent = {
       description:
         'TexasSolver GPU 把更快求解、快速进入场景、批量分析、Node Lock 和训练工具整合到同一套研究体验中。',
       download: '免费下载',
+      tutorial: '视频教程',
       discord: '加入 Discord',
       contact: '联系我',
       platform: '仅支持 Windows',
@@ -125,6 +128,7 @@ export const localizedContent = {
       description:
         'TexasSolver GPU는 더 빠른 계산, 빠른 시나리오 진입, 배치 분석, 노드 락, 전략 훈련을 하나의 워크스페이스로 묶습니다.',
       download: '무료 다운로드',
+      tutorial: '동영상 튜토리얼',
       discord: '디스코드 참여',
       contact: '문의하기',
       platform: 'Windows 전용',
@@ -167,6 +171,7 @@ export const localizedContent = {
       description:
         'TexasSolver GPU は高速計算、シナリオ選択、バッチ分析、Node Lock、戦略トレーニングをひとつの研究体験にまとめます。',
       download: '無料ダウンロード',
+      tutorial: 'ビデオチュートリアル',
       discord: 'Discord に参加',
       contact: 'お問い合わせ',
       platform: 'Windows 専用',
@@ -209,6 +214,7 @@ export const localizedContent = {
       description:
         'TexasSolver GPU объединяет быстрые расчеты, быстрый вход в сценарии, пакетный анализ, node lock и тренировку в одном исследовательском процессе.',
       download: 'Скачать бесплатно',
+      tutorial: 'Видеоурок',
       discord: 'Войти в Discord',
       contact: 'Связаться',
       platform: 'Только Windows',

@@ -158,7 +158,8 @@ function renderPage() {
             <p class="hero-description" data-i18n="hero.description">${escapeHtml(content.hero.description)}</p>
             <div class="cta-row">
               ${renderButton(siteConfig.downloadHref, content.hero.download, 'hero.download', 'primary', true)}
-              ${renderButton(siteConfig.discordHref, content.hero.discord, 'hero.discord', 'secondary', true)}
+              ${renderButton(siteConfig.tutorialHref, content.hero.tutorial, 'hero.tutorial', 'secondary', true)}
+              ${renderButton(siteConfig.discordHref, content.hero.discord, 'hero.discord', 'discord', true)}
               ${renderButton(siteConfig.contactHref, content.hero.contact, 'hero.contact', 'secondary', false)}
             </div>
           </div>
