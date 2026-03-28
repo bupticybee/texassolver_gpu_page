@@ -27,6 +27,9 @@ await cp(path.join(rootDir, 'src', 'runtime.js'), path.join(assetDir, 'runtime.j
 await optimizeImages()
 await writeFile(path.join(distDir, '.nojekyll'), '')
 
+const youtubeIcon = `<svg class="button-icon youtube-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.86-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M9.996,15.5l0-7l6.5,3.5L9.996,15.5z"/></svg>`
+const mailIcon = `<svg class="button-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`
+
 await writeFile(path.join(distDir, 'index.html'), renderPage(), 'utf8')
 
 function renderPage() {
@@ -158,9 +161,9 @@ function renderPage() {
             <p class="hero-description" data-i18n="hero.description">${escapeHtml(content.hero.description)}</p>
             <div class="cta-row">
               ${renderButton(siteConfig.downloadHref, content.hero.download, 'hero.download', 'primary', true)}
-              ${renderButton(siteConfig.tutorialHref, content.hero.tutorial, 'hero.tutorial', 'secondary', true)}
+              ${renderButton(siteConfig.tutorialHref, content.hero.tutorial, 'hero.tutorial', 'secondary', true, youtubeIcon)}
               ${renderButton(siteConfig.discordHref, content.hero.discord, 'hero.discord', 'discord', true)}
-              ${renderButton(siteConfig.contactHref, content.hero.contact, 'hero.contact', 'secondary', false)}
+              ${renderButton(siteConfig.contactHref, content.hero.contact, 'hero.contact', 'secondary', false, mailIcon)}
             </div>
           </div>
           <div class="hero-visual">
@@ -237,9 +240,9 @@ function renderPage() {
 </html>`
 }
 
-function renderButton(href, fallbackLabel, i18nKey, variant, external) {
+function renderButton(href, fallbackLabel, i18nKey, variant, external, iconSvg = '') {
   const attrs = external ? ' target="_blank" rel="noreferrer"' : ''
-  return `<a class="button button-${variant}" href="${href}"${attrs} data-i18n="${i18nKey}">${escapeHtml(fallbackLabel)}</a>`
+  return `<a class="button button-${variant}" href="${href}"${attrs}>${iconSvg}<span data-i18n="${i18nKey}">${escapeHtml(fallbackLabel)}</span></a>`
 }
 
 function escapeHtml(input) {

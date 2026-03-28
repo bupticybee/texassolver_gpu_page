@@ -460,6 +460,7 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   min-height: 56px;
   padding: 0 2.5rem;
   border-radius: 100px;
@@ -471,6 +472,22 @@ img {
   cursor: pointer;
   position: relative;
   overflow: hidden;
+}
+
+.button-icon {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.youtube-icon {
+  color: #f87171; /* Softer, pastel red */
+  opacity: 0.85;
+  transition: all var(--transition-fast);
+}
+
+.button:hover .youtube-icon {
+  color: #ef4444;
+  transform: scale(1.1);
 }
 
 .button::before {
