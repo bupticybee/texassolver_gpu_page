@@ -1,4 +1,4 @@
-import { cp, mkdir, rm, writeFile } from 'node:fs/promises'
+import { access, cp, mkdir, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
@@ -15,6 +15,8 @@ const optimizedScreenshots = {
   nodeLock: 'node_lock_page.webp',
   batch: 'batch_solving_page.webp',
   play: 'play_against_strategy.webp',
+  study: 'study_page.webp',
+  practice: 'practice_page.webp',
   logo: 'logo-mark.webp',
   favicon: 'logo-mark.png',
 }
@@ -69,7 +71,7 @@ function renderPage() {
           </div>
           <div class="feature-media">
             <div class="image-mask">
-              <img src="${assetPrefix}/images/${image}" alt="" loading="lazy" />
+              <img src="${assetPrefix}/images/${image}?v=${buildHash}" alt="" loading="lazy" />
             </div>
           </div>
         </article>`
@@ -168,11 +170,18 @@ function renderPage() {
           </div>
           <div class="hero-visual">
             <div class="hero-orbit"></div>
-            <img src="${assetPrefix}/images/${optimizedScreenshots.play}" alt="TexasSolver GPU play against strategy" fetchpriority="high" class="hero-carousel-img img-1" />
-            <img src="${assetPrefix}/images/${optimizedScreenshots.tree}" alt="TexasSolver GPU tree configuration" fetchpriority="high" class="hero-carousel-img img-2" />
-            <img src="${assetPrefix}/images/${optimizedScreenshots.quickStart}" alt="TexasSolver GPU quick start" fetchpriority="high" class="hero-carousel-img img-3" />
-            <img src="${assetPrefix}/images/${optimizedScreenshots.nodeLock}" alt="TexasSolver GPU node lock" fetchpriority="high" class="hero-carousel-img img-4" />
-            <img src="${assetPrefix}/images/${optimizedScreenshots.batch}" alt="TexasSolver GPU batch solving" fetchpriority="high" class="hero-carousel-img img-5" />
+            <img src="${assetPrefix}/images/${optimizedScreenshots.study}?v=${buildHash}" alt="TexasSolver GPU strategy study" fetchpriority="high" class="hero-carousel-img is-active" />
+            <img src="${assetPrefix}/images/${optimizedScreenshots.practice}?v=${buildHash}" alt="TexasSolver GPU decision practice" class="hero-carousel-img img-2" />
+            <img src="${assetPrefix}/images/${optimizedScreenshots.play}?v=${buildHash}" alt="TexasSolver GPU play against strategy" class="hero-carousel-img img-3" />
+            <img src="${assetPrefix}/images/${optimizedScreenshots.tree}?v=${buildHash}" alt="TexasSolver GPU tree configuration" class="hero-carousel-img img-4" />
+            <img src="${assetPrefix}/images/${optimizedScreenshots.nodeLock}?v=${buildHash}" alt="TexasSolver GPU node lock" class="hero-carousel-img img-5" />
+            <img src="${assetPrefix}/images/${optimizedScreenshots.batch}?v=${buildHash}" alt="TexasSolver GPU batch solving" class="hero-carousel-img img-6" />
+            <button class="hero-carousel-control hero-carousel-prev" type="button" aria-label="Previous product screenshot" data-i18n-aria="carousel.previous">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+            </button>
+            <button class="hero-carousel-control hero-carousel-next" type="button" aria-label="Next product screenshot" data-i18n-aria="carousel.next">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            </button>
           </div>
         </section>
 
@@ -255,6 +264,8 @@ function escapeHtml(input) {
 
 async function optimizeImages() {
   const rawImageDir = path.join(rootDir, 'raw_images')
+  const studySource = await resolveScreenshot(rawImageDir, siteConfig.screenshots.study, siteConfig.screenshots.play)
+  const practiceSource = await resolveScreenshot(rawImageDir, siteConfig.screenshots.practice, siteConfig.screenshots.play)
   const jobs = [
     buildWebp(path.join(rootDir, 'src', 'logo-mark.png'), path.join(screenshotDir, optimizedScreenshots.logo), 192, 82, false),
     buildPng(path.join(rootDir, 'src', 'logo-mark.png'), path.join(screenshotDir, optimizedScreenshots.favicon), 64),
@@ -263,9 +274,21 @@ async function optimizeImages() {
     buildWebp(path.join(rawImageDir, siteConfig.screenshots.nodeLock), path.join(screenshotDir, optimizedScreenshots.nodeLock), 1600, 80, true),
     buildWebp(path.join(rawImageDir, siteConfig.screenshots.batch), path.join(screenshotDir, optimizedScreenshots.batch), 1600, 80, true),
     buildWebp(path.join(rawImageDir, siteConfig.screenshots.play), path.join(screenshotDir, optimizedScreenshots.play), 1600, 80, true),
+    buildWebp(studySource, path.join(screenshotDir, optimizedScreenshots.study), 1600, 80, true),
+    buildWebp(practiceSource, path.join(screenshotDir, optimizedScreenshots.practice), 1600, 80, true),
   ]
 
   await Promise.all(jobs)
+}
+
+async function resolveScreenshot(directory, preferredName, fallbackName) {
+  const preferredPath = path.join(directory, preferredName)
+  try {
+    await access(preferredPath)
+    return preferredPath
+  } catch {
+    return path.join(directory, fallbackName)
+  }
 }
 
 async function buildWebp(input, output, width, quality, cropRight = false) {

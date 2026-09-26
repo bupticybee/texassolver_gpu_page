@@ -22,6 +22,51 @@ document.querySelectorAll('.top-nav a').forEach((link) => {
   })
 })
 
+// Hero screenshot carousel: auto-advance, pause on hover/focus, and allow manual navigation.
+const heroCarousel = document.querySelector('.hero-visual')
+if (heroCarousel) {
+  const slides = Array.from(heroCarousel.querySelectorAll('.hero-carousel-img'))
+  const previousButton = heroCarousel.querySelector('.hero-carousel-prev')
+  const nextButton = heroCarousel.querySelector('.hero-carousel-next')
+  let currentSlide = Math.max(0, slides.findIndex((slide) => slide.classList.contains('is-active')))
+  let carouselTimer = null
+
+  const showSlide = (index) => {
+    currentSlide = (index + slides.length) % slides.length
+    slides.forEach((slide, slideIndex) => {
+      const active = slideIndex === currentSlide
+      slide.classList.toggle('is-active', active)
+      slide.setAttribute('aria-hidden', active ? 'false' : 'true')
+    })
+  }
+
+  const stopCarousel = () => {
+    if (carouselTimer) {
+      window.clearInterval(carouselTimer)
+      carouselTimer = null
+    }
+  }
+
+  const startCarousel = () => {
+    stopCarousel()
+    if (slides.length > 1) {
+      carouselTimer = window.setInterval(() => showSlide(currentSlide + 1), 5000)
+    }
+  }
+
+  previousButton?.addEventListener('click', () => showSlide(currentSlide - 1))
+  nextButton?.addEventListener('click', () => showSlide(currentSlide + 1))
+  heroCarousel.addEventListener('mouseenter', stopCarousel)
+  heroCarousel.addEventListener('mouseleave', startCarousel)
+  heroCarousel.addEventListener('focusin', stopCarousel)
+  heroCarousel.addEventListener('focusout', (event) => {
+    if (!heroCarousel.contains(event.relatedTarget)) startCarousel()
+  })
+
+  showSlide(currentSlide)
+  startCarousel()
+}
+
 function escapeHtml(input) {
   return String(input)
     .replaceAll('&', '&amp;')
@@ -55,6 +100,16 @@ function applyLanguage(lang) {
         el.innerHTML = escapeHtml(val);
       }
     }
+  });
+
+  // Translated accessibility labels
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    const path = el.getAttribute('data-i18n-aria').split('.');
+    let val = db;
+    for (const k of path) {
+      if (val != null) val = val[k];
+    }
+    if (val !== undefined) el.setAttribute('aria-label', val);
   });
 
   // Feature translations
