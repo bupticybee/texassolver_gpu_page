@@ -59,13 +59,12 @@ function renderPage() {
 
   const featureCards = featureOrder
     .map((key, index) => {
-      const [title, accent, body] = featureContent[key][baseLocale]
+      const [title, , body] = featureContent[key][baseLocale]
       const image = optimizedScreenshots[key]
       const reverse = index % 2 === 1 ? ' reverse' : ''
       return `
         <article class="feature-card${reverse}">
           <div class="feature-copy">
-            <p class="feature-accent" data-i18n-feat="${key}.1">${escapeHtml(accent)}</p>
             <h3 data-i18n-feat="${key}.0">${escapeHtml(title)}</h3>
             <p data-i18n-feat="${key}.2">${escapeHtml(body)}</p>
           </div>
@@ -189,7 +188,6 @@ function renderPage() {
           <div class="section-intro">
             <p class="section-label" data-i18n="nav.overview">${escapeHtml(content.nav.overview)}</p>
             <h2 data-i18n="valuesTitle">${escapeHtml(content.valuesTitle)}</h2>
-            <p data-i18n="valuesText">${escapeHtml(content.valuesText)}</p>
           </div>
           <div class="value-grid">${valueCards}
           </div>
@@ -197,7 +195,6 @@ function renderPage() {
 
         <section id="features" class="features section-frame glass-panel">
           <div class="section-intro">
-            <p class="section-label" data-i18n="nav.features">${escapeHtml(content.nav.features)}</p>
             <h2 data-i18n="featuresTitle">${escapeHtml(content.featuresTitle)}</h2>
             <p data-i18n="featuresText">${escapeHtml(content.featuresText)}</p>
           </div>
