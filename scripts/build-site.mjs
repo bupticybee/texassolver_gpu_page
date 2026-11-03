@@ -159,7 +159,7 @@ function renderPage() {
           <div class="hero-copy">
             <p class="eyebrow" data-i18n="hero.eyebrow">${escapeHtml(content.hero.eyebrow)}</p>
             <h1 data-i18n="hero.title">${escapeHtml(content.hero.title)}</h1>
-            <p class="hero-description" data-i18n="hero.description">${escapeHtml(content.hero.description)}</p>
+            <p class="hero-description"><strong class="hero-speed-claim" data-i18n="hero.speedClaim">${escapeHtml(content.hero.speedClaim)}</strong> <span data-i18n="hero.description">${escapeHtml(content.hero.description)}</span></p>
             <div class="cta-row">
               ${renderButton(siteConfig.downloadHref, content.hero.download, 'hero.download', 'primary', true)}
               ${renderButton(siteConfig.tutorialHref, content.hero.tutorial, 'hero.tutorial', 'secondary', true, youtubeIcon)}

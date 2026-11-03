@@ -40,8 +40,9 @@ export const localizedContent = {
     hero: {
       eyebrow: 'Completely free for personal use',
       title: 'The world’s first GPU solver for poker',
+      speedClaim: '10× the solving speed of PioSolver.',
       description:
-        '10× the solving speed of PioSolver, with solving, preflop and postflop strategy study, and practice against GTO opponents—all completely free. We are committed to bringing the most advanced technology and the most comprehensive Texas Hold’em learning software to everyone.',
+        'Solve, study preflop and postflop strategy, and play against GTO opponents. Completely free for personal use.',
       download: 'Download for Free',
       tutorial: 'Video Tutorial',
       discord: 'Join Discord',
@@ -84,8 +85,9 @@ export const localizedContent = {
     hero: {
       eyebrow: '对个人完全免费',
       title: '世界第一个德州扑克 GPU Solver',
+      speedClaim: '相较 PioSolver，求解速度达到 10 倍。',
       description:
-        '相较 PioSolver，求解速度达到 10 倍。涵盖求解、翻前翻后策略学习，以及与 GTO 对手的对战练习，却完全免费。我们致力于将最先进的技术和最全面的德州扑克学习软件带给每一个人。',
+        '涵盖求解、翻前翻后策略学习，以及与 GTO 对手的对战练习，却完全免费。我们致力于将最先进的技术和最全面的德州扑克学习软件带给每一个人。',
       download: '免费下载',
       tutorial: '视频教程',
       discord: '加入 Discord',
@@ -126,8 +128,9 @@ export const localizedContent = {
     hero: {
       eyebrow: '개인 사용 완전 무료',
       title: '포커를 위한 세계 최초의 GPU 솔버',
+      speedClaim: 'PioSolver 대비 10배의 솔빙 속도.',
       description:
-        'PioSolver 대비 10배의 솔빙 속도. 솔빙, 프리플롭·포스트플롭 전략 학습, GTO 상대와의 대전 연습까지 모두 완전 무료로 제공합니다. 가장 앞선 기술과 가장 종합적인 텍사스 홀덤 학습 소프트웨어를 모든 사람에게 제공하는 것이 우리의 목표입니다.',
+        '솔빙, 프리플롭·포스트플롭 전략 학습, GTO 상대와의 대전 연습까지 모두 완전 무료로 제공합니다. 가장 앞선 기술과 가장 종합적인 텍사스 홀덤 학습 소프트웨어를 모든 사람에게 제공하는 것이 우리의 목표입니다.',
       download: '무료 다운로드',
       tutorial: '동영상 튜토리얼',
       discord: '디스코드 참여',
@@ -168,8 +171,9 @@ export const localizedContent = {
     hero: {
       eyebrow: '個人利用は完全無料',
       title: 'ポーカー向け世界初の GPU solver',
+      speedClaim: 'PioSolver の 10 倍の計算速度。',
       description:
-        'PioSolver の 10 倍の計算速度。求解、プリフロップ・ポストフロップの戦略学習、GTO 対戦相手との練習まで、すべて完全無料。最先端の技術と最も包括的なテキサスホールデム学習ソフトウェアを、すべての人に届けることを目指しています。',
+        '求解、プリフロップ・ポストフロップの戦略学習、GTO 対戦相手との練習まで、すべて完全無料。最先端の技術と最も包括的なテキサスホールデム学習ソフトウェアを、すべての人に届けることを目指しています。',
       download: '無料ダウンロード',
       tutorial: 'ビデオチュートリアル',
       discord: 'Discord に参加',
@@ -210,8 +214,9 @@ export const localizedContent = {
     hero: {
       eyebrow: 'Полностью бесплатно для личного использования',
       title: 'Первый в мире GPU solver для покера',
+      speedClaim: 'В 10 раз быстрее PioSolver.',
       description:
-        'Скорость расчётов в 10 раз выше, чем у PioSolver. Расчёты, изучение стратегий префлопа и постфлопа, тренировки против GTO-соперников — всё совершенно бесплатно. Мы стремимся сделать самые передовые технологии и наиболее полное программное обеспечение для изучения техасского холдема доступными каждому.',
+        'Расчёты, изучение префлопа и постфлопа, игра против GTO. Бесплатно для личного использования.',
       download: 'Скачать бесплатно',
       tutorial: 'Видеоурок',
       discord: 'Войти в Discord',

@@ -441,6 +441,11 @@ img {
   font-size: clamp(2rem, 3.5vw, 3rem);
 }
 
+.hero-speed-claim {
+  color: var(--brand-primary);
+  font-weight: 700;
+}
+
 .hero-description,
 .section-intro p {
   color: var(--text-muted);
